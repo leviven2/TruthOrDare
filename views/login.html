@@ -1,0 +1,30 @@
+{{define "login"}}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>L&L Truth or Dare</title>
+</head>
+<body>
+<!--Login page-->
+<h2>Login</h2>
+<form action="/login" method="post">
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username">
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password">
+    <input type="submit" value="Login">
+</form>
+
+<!--Register page-->
+<h2>Register</h2>
+<form action="/register" method="post">
+    <label for="registerUsername">Username</label>
+    <input type="text" name="username" id="registerUsername">
+    <label for="registerPassword">New password</label>
+    <input type="password" name="password" id="registerPassword">
+    <input type="submit" value="Register">
+</form>
+
+</body>
+</html>
+{{end}}

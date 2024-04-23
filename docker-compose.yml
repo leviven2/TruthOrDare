@@ -1,0 +1,17 @@
+version: "3"
+services:
+  truth_or_dare:
+    build: .
+    image: truthordare:latest
+    environment:
+      - GO_APP_MODE=production
+      - DB_CONNECT_STRING=go_app:secret@tcp(database:3306)/truthordare_app?parseTime=true  # Use the IP address of the database container
+    depends_on:
+      - database
+  database:
+    image: mariadb:latest
+    environment:
+      - MARIADB_RANDOM_ROOT_PASSWORD=yes
+      - MARIADB_DATABASE=truthordare_app
+      - MARIADB_USER=go_app
+      - MARIADB_PASSWORD=secret

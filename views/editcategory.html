@@ -1,0 +1,99 @@
+{{define "editcategory"}}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L&L Truth or Dare</title>
+    <style>
+        /* Voeg hier je stijlregels toe voor mobiel gebruik */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        p {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #ff6347;
+            color: #ffffff;
+            border: none;
+            border-radius: 4em;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #f32400;
+        }
+
+        .card-container {
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .card {
+            background-color: #f2b6f5;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<form action="/items" method="get">
+    <button type="submit">Terug</button>
+</form>
+
+<h1>{{.Category.Name}}</h1>
+
+<!--Add item-->
+<form action="/category/{{.Category.ID}}/additem" method="post">
+    <label for="name">Tekst</label>
+    <input type="text" name="name" id="name">
+    <button type="submit">Toevoegen</button>
+</form>
+
+<!--Delete item-->
+<div class="card-container">
+    {{range .Category.Items}}
+    <div class="card">
+        <p>{{.Description}}</p>
+        <form action="/items/deleteitem?id={{.ID}}" method="post">
+            <input type="hidden" name="id" value="{{.ID}}">
+            <button type="submit">Verwijder</button>
+        </form>
+    </div>
+    {{end}}
+</div>
+
+<!--Delete category-->
+<form action="/items/delete?name={{.Category.Name}}" method="post">
+    <button type="submit">Verwijder deze categorie</button>
+</form>
+
+</body>
+</html>
+
+{{end}}
