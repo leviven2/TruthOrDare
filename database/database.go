@@ -14,7 +14,7 @@ func connect() {
 	var err error
 
 	if os.Getenv("GO_APP_MODE") == "production" {
-		database, err = gorm.Open(mysql.Open(os.Getenv("DB_CONNECT_STRING")))
+		database, err = gorm.Open(mysql.Open(os.Getenv("DB_CONNECT_STRING")), &gorm.Config{})
 	} else {
 		database, err = gorm.Open(sqlite.Open("database.sqlite"))
 	}

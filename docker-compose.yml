@@ -2,33 +2,30 @@ version: "3"
 services:
   app:
     build: .
-    pull_policy: build
     environment:
       - GO_APP_MODE=production
-      - DB_CONNECT_STRING=go_app:secret@tcp(database)/truthordare_app?parseTime=true  # Use the IP address of the database container
+      - DB_CONNECT_STRING=go_app:secret@tcp(database)/truthordare_app?charset=utf8mb4&parseTime=True&loc=Local
     depends_on:
       - database
+    links:
+      - database
+    ports:
+      - "1323:1323"
     networks:
-      truthordare_network:
-        ipv4_address: 192.168.2.11
+      - truthordare_network
   database:
-    image: mysql:latest
+    container_name: database
+    image: mariadb
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD=yes
       - MYSQL_DATABASE=truthordare_app
       - MYSQL_USER=go_app
       - MYSQL_PASSWORD=secret
-    volumes:
-      - /data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "23306:3306"
     networks:
       - truthordare_network
 
-
 networks:
   truthordare_network:
-    ipam:
-      driver: default
-      config:
-        - subnet: "192.168.2.0/24"
+    driver: bridge
