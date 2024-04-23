@@ -5,6 +5,7 @@ services:
     environment:
       - GO_APP_MODE=production
       - DB_CONNECT_STRING=go_app:secret@tcp(database)/truthordare_app?charset=utf8mb4&parseTime=True&loc=Local
+    restart: always
     depends_on:
       - database
     links:
@@ -21,6 +22,7 @@ services:
       - MYSQL_DATABASE=truthordare_app
       - MYSQL_USER=go_app
       - MYSQL_PASSWORD=secret
+    restart: always
     ports:
       - "23306:3306"
     networks:
