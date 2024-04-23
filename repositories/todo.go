@@ -3,6 +3,7 @@ package repositories
 import (
 	"TruthOrDare/database"
 	"TruthOrDare/models"
+	"math/rand"
 )
 
 func GetCategoriesForUser(name string) []models.Category {
@@ -30,7 +31,13 @@ func GetItemsForCategory(category models.Category) []models.Item {
 
 func GetRandomItemForCategory(categoryId string) models.Item {
 	var item models.Item
-	database.DB().Where("category_id = ?", categoryId).Order("RANDOM()").First(&item)
+
+	var totalItems int64
+	database.DB().Where("category_id = ?", categoryId).Model(&models.Item{}).Count(&totalItems)
+
+	randomIndex := rand.Intn(int(totalItems))
+	database.DB().Where("category_id = ?", categoryId).Offset(randomIndex).Limit(1).Find(&item)
+
 	return item
 }
 

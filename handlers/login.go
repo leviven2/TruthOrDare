@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"TruthOrDare/repositories"
-	"fmt"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
@@ -26,7 +25,6 @@ func GetPasswordFromCookie(c echo.Context) string {
 }
 
 func TryCookiesLogin(c echo.Context) error {
-	fmt.Println("TryCookiesLogin")
 	username := GetNameFromCookie(c)
 	password := GetPasswordFromCookie(c)
 	if username == "Not logged in" || password == "nil" {
