@@ -16,3 +16,5 @@ services:
       - MARIADB_DATABASE=truthordare_app
       - MARIADB_USER=go_app
       - MARIADB_PASSWORD=secret
+    ports:
+        - "3306:3306"
