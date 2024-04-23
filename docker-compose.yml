@@ -5,11 +5,12 @@ services:
     image: truthordare:latest
     environment:
       - GO_APP_MODE=production
-      - DB_CONNECT_STRING=go_app:secret@tcp(database:3306)/truthordare_app?parseTime=true  # Use the IP address of the database container
+      - DB_CONNECT_STRING=go_app:secret@tcp(truthordare_db)/truthordare_app?parseTime=true  # Use the IP address of the database container
     depends_on:
       - database
   database:
     image: mariadb:latest
+    container_name: truthordare_db
     environment:
       - MARIADB_RANDOM_ROOT_PASSWORD=yes
       - MARIADB_DATABASE=truthordare_app
