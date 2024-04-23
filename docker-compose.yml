@@ -5,9 +5,12 @@ services:
     pull_policy: build
     environment:
       - GO_APP_MODE=production
-      - DB_CONNECT_STRING=go_app:secret@tcp(database:3306)/truthordare_app?parseTime=true  # Use the IP address of the database container
+      - DB_CONNECT_STRING=go_app:secret@tcp(database)/truthordare_app?parseTime=true  # Use the IP address of the database container
     depends_on:
       - database
+    networks:
+      truthordare_network:
+        ipv4_address: 192.168.2.11
   database:
     image: mysql:latest
     environment:
@@ -16,4 +19,16 @@ services:
       - MYSQL_USER=go_app
       - MYSQL_PASSWORD=secret
     volumes:
-        - /data:/var/lib/mysql
+      - /data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - truthordare_network
+
+
+networks:
+  truthordare_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.2.0/24"
