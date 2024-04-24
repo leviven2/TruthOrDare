@@ -2,6 +2,7 @@ version: "3"
 services:
   app:
     build: .
+    pull_policy: build
     environment:
       - GO_APP_MODE=production
       - DB_CONNECT_STRING=go_app:secret@tcp(database)/truthordare_app?charset=utf8mb4&parseTime=True&loc=Local
@@ -22,6 +23,8 @@ services:
       - MYSQL_DATABASE=truthordare_app
       - MYSQL_USER=go_app
       - MYSQL_PASSWORD=secret
+    volumes:
+      - data:/var/lib/mysql
     restart: always
     ports:
       - "23306:3306"
@@ -31,3 +34,6 @@ services:
 networks:
   truthordare_network:
     driver: bridge
+
+volumes:
+  data:
