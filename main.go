@@ -36,8 +36,8 @@ func main() {
 		return handlers.DeleteItem(c, id)
 	})
 	e.POST("/items/delete", func(c echo.Context) error {
-		listname := c.QueryParam("name")
-		return handlers.DeleteCategory(c, listname)
+		categoryId := c.QueryParam("id")
+		return handlers.DeleteCategory(c, categoryId)
 	})
 
 	e.Debug = true

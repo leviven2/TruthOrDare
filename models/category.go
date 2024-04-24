@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type Category struct {
 	gorm.Model
-	Name   string `gorm:"primaryKey;unique"`
+	Name   string
 	Items  []Item
 	UserID uint
 }

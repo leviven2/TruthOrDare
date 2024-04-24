@@ -24,12 +24,7 @@
             margin-bottom: 5px;
         }
 
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        li {
+        .card {
             background-color: #ffffff;
             border-radius: 5px;
             margin: 10px;
@@ -63,6 +58,11 @@
         .postbutton:hover {
             background-color: #f32400;
         }
+
+        .card-container {
+            max-height: 60vh;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body>
@@ -73,10 +73,9 @@
 </form>
 
 <h1>Categorieën</h1>
-<ul>
+<div class="card-container">
     {{range .Categories}}
-    <li>
-        <div>
+        <div class="card">
             <form method="post" action="/category/{{.ID}}/post">
                 <button class="postbutton" type="submit">{{.Name}}</button>
             </form>
@@ -84,9 +83,8 @@
                 <button type="submit">Bewerken</button>
             </form>
         </div>
-    </li>
     {{end}}
-</ul>
+</div>
 
 <!-- Create new category -->
 <h3>Maak een nieuwe categorie</h3>

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"TruthOrDare/repositories"
+	"fmt"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
@@ -24,22 +25,24 @@ func ShowHomePage(c echo.Context) error {
 }
 
 func AddCategory(c echo.Context) error {
+	fmt.Println("AddCategory")
 	username := GetNameFromCookie(c)
 	if !repositories.DoesUserExist(username) {
 		return c.NoContent(http.StatusNotFound)
 	}
 
+	fmt.Println("Adding category")
 	repositories.AddCategoryForUser(username, c.FormValue("name"))
 	return c.Redirect(http.StatusFound, "/items")
 }
 
-func DeleteCategory(c echo.Context, categoryName string) error {
+func DeleteCategory(c echo.Context, categoryId string) error {
 	username := GetNameFromCookie(c)
 	if !repositories.DoesUserExist(username) {
 		return c.NoContent(http.StatusNotFound)
 	}
 
-	repositories.DeleteCategoryForUser(username, categoryName)
+	repositories.DeleteCategoryForUser(username, categoryId)
 	return c.Redirect(http.StatusFound, "/items")
 }
 

@@ -48,19 +48,18 @@ func AddCategoryForUser(userName string, categoryName string) {
 	category := models.Category{Name: categoryName, UserID: user.ID}
 	user.Categories = append(user.Categories, category)
 
-	database.DB().Save(&category)
 	database.DB().Save(&user)
 }
 
-func DeleteCategoryForUser(username string, categoryName string) {
+func DeleteCategoryForUser(username string, categoryId string) {
 	var user models.User
 	database.DB().Where("name = ?", username).Preload("Categories").First(&user)
 
-	var todoList models.Category
-	database.DB().Where("name = ?", categoryName).First(&todoList)
+	var category models.Category
+	database.DB().Where("id = ?", categoryId).First(&category)
 
-	database.DB().Model(&user).Association("Categories").Delete(&todoList)
-	database.DB().Delete(&todoList)
+	database.DB().Model(&user).Association("Categories").Delete(&category)
+	database.DB().Delete(&category)
 }
 
 func AddItemForUser(categoryId string, itemName string) {
